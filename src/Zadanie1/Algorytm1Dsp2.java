@@ -1,3 +1,5 @@
+package Zadanie1;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,6 +15,7 @@ public class Algorytm1Dsp2 {
         String outputFile= "koncowyWynik.txt";
         int number;
         int hashSetSize;
+        int licznikOperacji = 0;
 
         try (BufferedReader czytnik = new BufferedReader(new FileReader(inputFile))) {
             String line = czytnik.readLine(); //1 liczba jest mi niepotrzebna
@@ -20,6 +23,7 @@ public class Algorytm1Dsp2 {
             while ((line = czytnik.readLine()) != null) {
                 number = Integer.parseInt(line);
                 while(true) {
+                    licznikOperacji++;
                     if(liczby.contains(number)) {
                         liczby.remove(number);
                         number *= 2;
@@ -45,6 +49,7 @@ public class Algorytm1Dsp2 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Licznik Operacji: " + licznikOperacji);
 
     }
 }
