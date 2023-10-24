@@ -33,12 +33,9 @@ public class Algorytm2Dsp1 {
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch(ArrayIndexOutOfBoundsException e ){
-            //
-        } catch (NumberFormatException e) {
+        } catch(ArrayIndexOutOfBoundsException | NumberFormatException e ){
             //
         }
-
 
 
         double minOdl = 1000;
@@ -58,11 +55,8 @@ public class Algorytm2Dsp1 {
                 }
             }
         }
-
         System.out.println("Punkty na ktorych najlepiej zawiesic hamak to: (" + bliki1.getX() + "," +
                 bliki1.getY()+ ") i (" + bliki2.getX() + "," +  bliki2.getY() + ").");
         System.out.println("Liczba Operacji: " + liczbaOperacji);
-
-
     }
 }
