@@ -36,11 +36,9 @@ public class Algorytm2Dsp1 {
         } catch(ArrayIndexOutOfBoundsException | NumberFormatException e ){
             //
         }
-
-
         double minOdl = 1000;
-        Punkt bliki1 = null;
-        Punkt bliki2 = null;
+        Punkt bliski1 = null;
+        Punkt bliski2 = null;
 
         for(int i =0; i < punkty.size(); i++) {
             for(int j =0; j < punkty.size(); j++) {
@@ -49,14 +47,14 @@ public class Algorytm2Dsp1 {
                 liczbaOperacji++;
                 if(punkt1.odleglosc(punkt2) < minOdl && i != j) {
                     minOdl = punkt1.odleglosc(punkt2);
-                    bliki1 = punkt1;
-                    bliki2 = punkt2;
+                    bliski1 = punkt1;
+                    bliski2 = punkt2;
                     liczbaOperacji++;
                 }
             }
         }
-        System.out.println("Punkty na ktorych najlepiej zawiesic hamak to: (" + bliki1.getX() + "," +
-                bliki1.getY()+ ") i (" + bliki2.getX() + "," +  bliki2.getY() + ").");
+        System.out.println("Punkty na ktorych najlepiej zawiesic hamak to: (" + bliski1.getX() + "," +
+                bliski1.getY()+ ") i (" + bliski2.getX() + "," +  bliski2.getY() + ").");
         System.out.println("Liczba Operacji: " + liczbaOperacji);
     }
 }

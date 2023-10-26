@@ -25,7 +25,6 @@ public class Algorytm1Dsp1 {
                 int number = Integer.parseInt(line);
                 tabSize--;
                 tab[tabSize] = number;
-                liczbaOperacji++;
             }
         } catch (IOException e) {
             e.printStackTrace();
