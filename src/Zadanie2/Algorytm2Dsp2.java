@@ -10,7 +10,7 @@ import java.util.List;
 public class Algorytm2Dsp2 {
     public static void main(String[] args) {
 
-        int tab[][];
+        int tab[][] = new int[0][];
         List<Punkt> punkty = new ArrayList<>();
         int liczbaOperacji = 0;
         String [] tym;
@@ -24,11 +24,14 @@ public class Algorytm2Dsp2 {
                 tym = line.split(" ");
                 tab[i][0] = Integer.parseInt(tym[0]);
                 tab[i][1] = Integer.parseInt(tym[1]);
+                i++;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch(ArrayIndexOutOfBoundsException | NumberFormatException e ){
             //
         }
+        //Algorytm dziel i zwyciezaj
+        int[][] tabX = tab.clone();
     }
 }
