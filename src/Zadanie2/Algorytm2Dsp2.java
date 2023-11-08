@@ -4,21 +4,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
+
 
 public class Algorytm2Dsp2 {
     public static void main(String[] args) {
-
+        int maxValue = 10;
+        int howManyPoint = 9;
         int tab[][] = new int[0][];
-        List<Punkt> punkty = new ArrayList<>();
         int liczbaOperacji = 0;
         String [] tym;
         Path path = Paths.get("szymonBartkowiakPS1.txt");
-        int howManyPoint = 9;
+
 
         try {
             List<String> lines = Files.readAllLines(path);
@@ -35,20 +33,67 @@ public class Algorytm2Dsp2 {
         }
 
         //Sortowanie po X i Y
-        int[][] tabX = new  int[howManyPoint][2];
-        for (int i = 0; i < howManyPoint; i++) {
-            tabX[i] = Arrays.copyOf(tab[i], tab[i].length);
-        }
+        int[][] tabX = new int[howManyPoint][2];
+        coping(tabX,tab,howManyPoint);
+
         int[][] tabY = new  int[howManyPoint][2];
-        for (int i = 0; i < howManyPoint; i++) {
-            tabY[i] = Arrays.copyOf(tab[i], tab[i].length);
-        }
+        coping(tabY,tab,howManyPoint);
+
         quicksort(tabX,0, tab.length - 1,0);
         quicksort(tabY,0, tab.length - 1,1);
 
+        //Prosta l dzialeaca Pl i Pr
+        int[][] tabPlTym = new int[howManyPoint][2];
+        int[][] tabPrTym = new int[howManyPoint][2];
+        int sizePl = 0;
+        int sizePr = 0;
 
+        for(int i = 0; i < howManyPoint;i++) {
+            if(tab[i][0] <= maxValue/2) {
+                tabPlTym[sizePl][0] = tab[i][0];
+                tabPlTym[sizePl][1] = tab[i][1];
+                sizePl++;
+            }
+            if(tab[i][0] >= maxValue/2) {
+                tabPrTym[sizePr][0] = tab[i][0];
+                tabPrTym[sizePr][1] = tab[i][1];
+                sizePr++;
+            }
+        }
+        int[][] tabPl = shortTab(tabPlTym, sizePl);
+        int[][] tabPr = shortTab(tabPrTym, sizePr);
 
+        // to samo robie dla X i Y
+        int[][] tabXl = new int[sizePl][2];
+        int[][] tabXr = new int[sizePr][2];
+        int[][] tabYl = new int[sizePl][2];
+        int[][] tabYr = new int[sizePr][2];
 
+        coping(tabXl,tabPl,sizePl);
+        coping(tabXr,tabPr,sizePr);
+        coping(tabYl,tabPl,sizePl);
+        coping(tabYl,tabPr,sizePr);
+
+        quicksort(tabXl,0, sizePl - 1,0);
+        quicksort(tabXr,0, sizePr - 1,0);
+        quicksort(tabYl,0, sizePl - 1,1);
+        quicksort(tabYr,0, sizePr - 1,1);
+
+    }
+        private static void coping(int[][] tabK,int tab[][], int howManyPoint) {
+            for (int i = 0; i < howManyPoint; i++) {
+                tabK[i] = Arrays.copyOf(tab[i], tab[i].length);
+            }
+        }
+        public static int[][] shortTab(int[][] oldTab, int newSize) {
+            int[][] returnTab = new int[newSize][oldTab[0].length];
+
+            for (int i = 0; i < newSize; i++) {
+                for (int j = 0; j < oldTab[0].length; j++) {
+                    returnTab[i][j] = oldTab[i][j];
+                }
+            }
+        return returnTab;
     }
         private static void quicksort(int[][] array, int lowIndex, int highIndex,int place) {
 
@@ -88,7 +133,6 @@ public class Algorytm2Dsp2 {
             else {
                 leftPointer = highIndex;
             }
-
             return leftPointer;
         }
 
