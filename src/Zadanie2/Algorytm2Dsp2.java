@@ -85,6 +85,21 @@ public class Algorytm2Dsp2 {
                 tabK[i] = Arrays.copyOf(tab[i], tab[i].length);
             }
         }
+        private static double shortDistance(int[][] tab) {
+            int size = tab.length;
+            double tym;
+            double min = distance(tab[0][0],tab[0][1],tab[1][0],tab[1][1]);
+            for(int i = 0; i < size-1; i++) {
+                tym = distance(tab[i][0],tab[i][1],tab[i+1][0],tab[i+1][1]);
+                if(tym < min) {
+                    min = tym;
+                }
+            }
+            return min;
+        }
+        private static double distance(int x1, int y1, int x2, int y2) {
+            return ((Math.pow((x1-x2),2))+(Math.pow((y1-y2),2)));
+        }
         public static int[][] shortTab(int[][] oldTab, int newSize) {
             int[][] returnTab = new int[newSize][oldTab[0].length];
 
