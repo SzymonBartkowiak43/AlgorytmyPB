@@ -158,11 +158,6 @@ public class Algorytm2Dsp2 {
             array[index2][place] = temp;
             swap(array,index1,index2,1);
         }
-    private static void swap(int[][] array, int index1, int index2,int place) {
-        int temp = array[index1][place];
-        array[index1][place] = array[index2][place];
-        array[index2][place] = temp;
-    }
     private static void print(int[][] tab) {
         for (int[] ints : tab) {
             for (int anInt : ints) {
@@ -171,6 +166,12 @@ public class Algorytm2Dsp2 {
             System.out.println();
         }
     }
+    private static void swap(int[][] array, int index1, int index2,int place) {
+        int temp = array[index1][place];
+        array[index1][place] = array[index2][place];
+        array[index2][place] = temp;
+    }
+
 }
 
 
