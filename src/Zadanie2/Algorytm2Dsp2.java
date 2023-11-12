@@ -78,6 +78,7 @@ public class Algorytm2Dsp2 {
         quicksort(tabXr,0, sizePr - 1,0);
         quicksort(tabYl,0, sizePl - 1,1);
         quicksort(tabYr,0, sizePr - 1,1);
+        System.out.println("yttt");
 
     }
         private static void coping(int[][] tabK,int tab[][], int howManyPoint) {
