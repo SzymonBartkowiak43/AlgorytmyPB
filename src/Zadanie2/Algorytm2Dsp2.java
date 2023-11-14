@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
+
 public class Algorytm2Dsp2 {
     public static void main(String[] args) {
         int maxValue = 10;
@@ -78,7 +79,24 @@ public class Algorytm2Dsp2 {
         quicksort(tabXr,0, sizePr - 1,0);
         quicksort(tabYl,0, sizePl - 1,1);
         quicksort(tabYr,0, sizePr - 1,1);
-        System.out.println("yttt");
+
+        //krok 5
+        double minOdlPl = 1000;
+        int[][] wspolzednePl = new int[2][2];
+        if(tabPl.length < 3 ) {
+            for(int i = 0; i < tabPl.length-1; i++) {
+                double aktualnaOdl = ((Math.pow((tabPl[i][0]-tabPl[i+1][0]),2))+(Math.pow((tabPl[i][1]-tabPl[i+1][1]),2)));
+                if(aktualnaOdl > minOdlPl) {
+                    minOdlPl = aktualnaOdl;
+                    wspolzednePl[0][0] = tabPl[i][0];
+                    wspolzednePl[0][1] = tabPl[i][1];
+                    wspolzednePl[1][0] = tabPl[i+1][0];
+                    wspolzednePl[1][1] = tabPl[i+1][1];
+                }
+            }
+        } else {
+            mergeSort(tabPl,tabXl,tabYl);
+        }
 
     }
         private static void coping(int[][] tabK,int tab[][], int howManyPoint) {
@@ -172,7 +190,8 @@ public class Algorytm2Dsp2 {
         array[index1][place] = array[index2][place];
         array[index2][place] = temp;
     }
-
+    private static void mergeSort(int[][] tabP,int [][] tabX, int[][] tabY ) {
+    }
 }
 
 
