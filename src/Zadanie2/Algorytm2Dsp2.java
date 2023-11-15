@@ -168,6 +168,7 @@ public class Algorytm2Dsp2 {
                 leftPointer = highIndex;
             }
             return leftPointer;
+
         }
 
         private static void swap(int[][] array, int index1, int index2) {
