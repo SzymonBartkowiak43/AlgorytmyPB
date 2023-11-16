@@ -36,9 +36,10 @@ public class Algorytm2Dsp1 {
         } catch(ArrayIndexOutOfBoundsException | NumberFormatException e ){
             //
         }
-        double minOdl = 1000;
+        double minOdl = punkty.get(0).odleglosc(punkty.get(1));
         Punkt bliski1 = null;
         Punkt bliski2 = null;
+        System.out.println(punkty.size());
 
         for(int i =0; i < punkty.size(); i++) {
             for(int j =0; j < punkty.size(); j++) {
