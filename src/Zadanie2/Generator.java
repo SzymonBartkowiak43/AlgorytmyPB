@@ -11,14 +11,14 @@ import java.util.Random;
 
 public class Generator {
     public static void main(String[] args) {
-        int ileLiczb = 10;
+        int ileLiczb = 100000;
         Random random = new Random();
         Path path = Paths.get("szymonBartkowiakPS1.txt");
         List<String> list = new ArrayList<>();
         list.add(String.valueOf(ileLiczb));
 
         for(int i = 0; i < ileLiczb; i++) {
-            list.add(random.nextInt(1000) + " " + random.nextInt(1000));
+            list.add(random.nextInt(ileLiczb ) + " " + random.nextInt(ileLiczb));
         }
 
         try {

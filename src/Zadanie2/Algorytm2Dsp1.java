@@ -13,7 +13,6 @@ import java.util.List;
 public class Algorytm2Dsp1 {
 
     public static void main(String[] args) {
-
         double x;
         double y;
         List<Punkt> punkty = new ArrayList<>();
@@ -34,12 +33,12 @@ public class Algorytm2Dsp1 {
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch(ArrayIndexOutOfBoundsException | NumberFormatException e ){
-            //
+            System.out.println("Cos z pliczkiem nie tak(jego formatem)");
         }
+
         double minOdl = punkty.get(0).odleglosc(punkty.get(1));
         Punkt bliski1 = null;
         Punkt bliski2 = null;
-        System.out.println(punkty.size());
 
         for(int i =0; i < punkty.size(); i++) {
             for(int j =0; j < punkty.size(); j++) {

@@ -11,13 +11,12 @@ import java.util.List;
 
 public class Algorytm2Dsp2 {
     public static void main(String[] args) {
-        //int maxValue = 10;
-        int howManyPoint = 10;
-        int tab[][] = new int[0][];
+
+        int howManyPoint;
+        int[][] tab;
         int liczbaOperacji = 0;
         String[] tym;
         Path path = Paths.get("szymonBartkowiakPS1.txt");
-
 
         try {
             List<String> lines = Files.readAllLines(path);
@@ -34,7 +33,6 @@ public class Algorytm2Dsp2 {
         } catch (IOException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
             throw new RuntimeException(e);
         }
-
         //Sortowanie po X i Y
         int[][] tabX = new int[howManyPoint][2];
         coping(tabX, tab, howManyPoint);
@@ -52,6 +50,7 @@ public class Algorytm2Dsp2 {
         int sizePr = 0;
 
         for (int i = 0; i < howManyPoint; i++) {
+            liczbaOperacji++;
             if (tab[i][0] <= howManyPoint / 2) {
                 tabPlTym[sizePl][0] = tab[i][0];
                 tabPlTym[sizePl][1] = tab[i][1];
@@ -75,7 +74,7 @@ public class Algorytm2Dsp2 {
         coping(tabXl, tabPl, sizePl);
         coping(tabXr, tabPr, sizePr);
         coping(tabYl, tabPl, sizePl);
-        coping(tabYl, tabPr, sizePr);
+        coping(tabYr, tabPr, sizePr);
 
         quicksort(tabXl, 0, sizePl - 1, 0);
         quicksort(tabXr, 0, sizePr - 1, 0);
@@ -83,37 +82,54 @@ public class Algorytm2Dsp2 {
         quicksort(tabYr, 0, sizePr - 1, 1);
 
         //krok 5
-        double minOdlPl = 1000;
+        double minOdlPl = 1_000_000;
         int[][] wspolzednePl = new int[2][2];
-            for (int i = 0; i < tabPl.length - 1; i++) {
-                double aktualnaOdl = ((Math.pow((tabPl[i][0] - tabPl[i + 1][0]), 2)) + (Math.pow((tabPl[i][1] - tabPl[i + 1][1]), 2)));
-                if (aktualnaOdl > minOdlPl) {
-                    minOdlPl = aktualnaOdl;
+
+
+        int size = tabPl.length;
+        double aktualny;
+        double minPl = distance(tabPl[0][0],tabPl[0][1], tabPl[1][0], tabPl[1][1]);
+        for (int i = 0; i < size; i++) {
+            for(int j =0; j < size;j++) {
+                aktualny = distance(tabPl[i][0], tabPl[i][1],tabPl[j][0], tabPl[j][1]);
+                liczbaOperacji++;
+                if (aktualny < minPl && i != j) {
+                    minPl = aktualny;
+
                     wspolzednePl[0][0] = tabPl[i][0];
                     wspolzednePl[0][1] = tabPl[i][1];
-                    wspolzednePl[1][0] = tabPl[i + 1][0];
-                    wspolzednePl[1][1] = tabPl[i + 1][1];
+                    wspolzednePl[1][0] = tabPl[j][0];
+                    wspolzednePl[1][1] = tabPl[j][1];
                 }
             }
+        }
 
-        double minOdlPr = 1000;
+
+        //krok 6
+        double minOdlPr = 1_000_000;
         int[][] wspolzednePr = new int[2][2];
-            for (int i = 0; i < tabPr.length - 1; i++) {
-                double aktualnaOdl = ((Math.pow((tabPr[i][0] - tabPr[i + 1][0]), 2)) + (Math.pow((tabPr[i][1] - tabPr[i + 1][1]), 2)));
-                if (aktualnaOdl > minOdlPr) {
-                    minOdlPr = aktualnaOdl;
+
+        size = tabPr.length;
+        double minPr = distance(tabPr[0][0],tabPr[0][1], tabPr[1][0], tabPr[1][1]);
+        for (int i = 0; i < size - 1; i++) {
+            for(int j =0; j < size -1;j++) {
+                aktualny = distance(tabPr[i][0], tabPr[i][1],tabPr[j][0], tabPr[j][1]);
+                liczbaOperacji++;
+                if (aktualny < minPr && i != j) {
+                    minPr = aktualny;
                     wspolzednePr[0][0] = tabPr[i][0];
                     wspolzednePr[0][1] = tabPr[i][1];
-                    wspolzednePr[1][0] = tabPr[i + 1][0];
-                    wspolzednePr[1][1] = tabPr[i + 1][1];
+                    wspolzednePr[1][0] = tabPr[j][0];
+                    wspolzednePr[1][1] = tabPr[j][1];
                 }
             }
-
-        System.out.println(wspolzednePr[0][0]);
-        System.out.println(wspolzednePr[0][1]);
-        System.out.println(wspolzednePr[1][0]);
-        System.out.println(wspolzednePr[1][1]);
+        }
+    if(minPl > minPr) {
+        print(wspolzednePr);
+    } else print(wspolzednePl);
+        System.out.println(liczbaOperacji);
     }
+
 
     private static void coping(int[][] tabK, int tab[][], int howManyPoint) {
         for (int i = 0; i < howManyPoint; i++) {
@@ -126,16 +142,18 @@ public class Algorytm2Dsp2 {
         double tym;
         double min = distance(tab[0][0], tab[0][1], tab[1][0], tab[1][1]);
         for (int i = 0; i < size - 1; i++) {
-            tym = distance(tab[i][0], tab[i][1], tab[i + 1][0], tab[i + 1][1]);
-            if (tym < min) {
-                min = tym;
+            for(int j =0; j < size -1;j++) {
+                tym = distance(tab[i][0], tab[i][1], tab[j][0], tab[j][1]);
+                if (tym < min && i != j) {
+                    min = tym;
+                }
             }
         }
         return min;
     }
 
     private static double distance(int x1, int y1, int x2, int y2) {
-        return ((Math.pow((x1 - x2), 2)) + (Math.pow((y1 - y2), 2)));
+        return Math.sqrt(((Math.pow((x1 - x2), 2)) + (Math.pow((y1 - y2), 2))));
     }
 
     public static int[][] shortTab(int[][] oldTab, int newSize) {
@@ -212,48 +230,6 @@ public class Algorytm2Dsp2 {
         array[index1][place] = array[index2][place];
         array[index2][place] = temp;
     }
-
-//    private static void mergeSort(int[][] inputArray) {
-//        int inputLength = inputArray.length;
-//
-//        if (inputLength < 2) {
-//            return;
-//        }
-//
-//        int midIndex = inputLength / 2;
-//        int[] leftHalf = new int[midIndex];
-//        int[] rightHalf = new int[inputLength - midIndex];
-//
-//        for (int i = 0; i < midIndex; i++) {
-//            leftHalf[i] = inputArray[i];
-//        }
-//        for (int i = midIndex; i < inputLength; i++) {
-//            rightHalf[i - midIndex] = inputArray[i];
-//        }
-//
-//        mergeSort(leftHalf);
-//        mergeSort(rightHalf);
-//
-//        merge(inputArray, leftHalf, rightHalf);
-//    }
-//
-//    private static void merge(int[][] inputArray, int[][] leftHalf, int[][] rightHalf,int xORy) {
-//        int leftSize = leftHalf.length;
-//        int rightSize = rightHalf.length;
-//
-//        int i = 0, j = 0, k = 0;
-//
-//        while (i < leftSize && j < rightSize) {
-//            if (leftHalf[i][xORy] <= rightHalf[j][xORy]) {
-//                inputArray[k][xORy] = leftHalf[i][xORy];
-//                i++;
-//            } else {
-//                inputArray[k][xORy] = rightHalf[j][xORy];
-//                j++;
-//            }
-//            k++;
-//        }
-//    }
 }
 
 

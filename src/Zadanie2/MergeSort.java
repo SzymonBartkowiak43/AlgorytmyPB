@@ -7,7 +7,6 @@ public class MergeSort {
 
         Random rand = new Random();
         int[] numbers = new int[10];
-
         for (int i = 0; i < numbers.length; i++) {
             numbers[i] = rand.nextInt(10);
         }
@@ -74,8 +73,8 @@ public class MergeSort {
     }
 
     private static void printArray(int[] numbers) {
-        for (int i = 0; i < numbers.length; i++) {
-            System.out.println(numbers[i]);
+        for (int number : numbers) {
+            System.out.println(number);
         }
     }
 }
