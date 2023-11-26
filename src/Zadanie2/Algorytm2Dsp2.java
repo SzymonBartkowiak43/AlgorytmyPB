@@ -124,10 +124,14 @@ public class Algorytm2Dsp2 {
                 }
             }
         }
+        System.out.println("Punkty: ");
     if(minPl > minPr) {
         print(wspolzednePr);
-    } else print(wspolzednePl);
-        System.out.println(liczbaOperacji);
+    } else
+        print(wspolzednePl);
+
+
+    System.out.println("Liczba Operacji:" + liczbaOperacji);
     }
 
 

@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Generator {
     public static void main(String[] args) {
-        int ileLiczb = 100000;
+        int ileLiczb = 10;
         Random random = new Random();
         Path path = Paths.get("szymonBartkowiakPS1.txt");
         List<String> list = new ArrayList<>();
