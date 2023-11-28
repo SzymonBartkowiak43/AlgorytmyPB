@@ -5,21 +5,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Stream;
+import java.util.*;
 
-//        5 //liczba puszek w magazynie
-//        1 4 //najpierw wysokosc 2 do 1 a  wartosc puszki 4
-//        2 6
-//        1 3
-//        2 2
-//        1 5
-//        2 //liczba rur
-//        1 1 // najpierw wysokosc 2 do potegi 1 rury potem ile takich rur
-//        2 2
+import static java.lang.System.exit;
+
 public class Algorytm3spA {
     public static void main(String[] args) {
         Path path = Paths.get("src/Zadanie3/Zadanie3AWejsciowy.txt");
@@ -50,57 +39,62 @@ public class Algorytm3spA {
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
-        MargeSort mergeSort = new MargeSort();
-        mergeSort.mergeSort(puszki,0,puszki.length-1,0);
 
-        int lowIndex =0;
-        int highIndex = 0;
-        int puszkaSize = 1;
-        for(int i = 0;i < puszki.length;i++) {
-            if(puszki[i][0] == puszkaSize) {
-                while(puszki[i][0] == puszkaSize && i!= puszki.length-1) {
-                    i++;
-                    highIndex++;
-                }
-                mergeSort.mergeSort(puszki,lowIndex,highIndex,1);
-                lowIndex = highIndex;
-            }
-                puszkaSize*= 2;
-        }
-        mergeSort.print(puszki);
+
+
         Collections.sort(rury);
-        rury.forEach(System.out::println);
         int max = 0;
+        int liczbaPuszek;
 
-        int[] indexyDoKasacji = new int[puszki.length];
-
-        for(int j = 0; j < puszki.length;j++) {
-            indexyDoKasacji[j] = 0;
-        }
-
-
-        for(int i = 0; i < rury.size();i++) {
-            int rozmiarRury = rury.get(i);
+        for (int rozmiarRury : rury) {
             int aktualnyMaksRury = 0;
+            liczbaPuszek = puszki.length;
+            int[][] tab = new int[liczbaPuszek + 1][rozmiarRury + 1];
 
-            //Wybieram najlepsza opcje
-            for(int j = 0; j < puszki.length;j++) {
-                if(rozmiarRury >= puszki[j][0] && puszki[j][0] != 0) {
-                    aktualnyMaksRury = puszki[j][1];
-                    indexyDoKasacji[0] = j;
+            for (int i = 0; i <= rozmiarRury; i++)
+                tab[0][i] = 0;
+            for (int i = 0; i <= liczbaPuszek; i++)
+                tab[i][0] = 0;
+
+            for (int j = 1; j <= rozmiarRury; j++) {
+                int wysokoscPuszki = puszki[0][0];
+                int wartoscPuszki = puszki[0][1];
+                if (wysokoscPuszki <= rozmiarRury && wysokoscPuszki <= j) {
+                    tab[1][j] = wartoscPuszki;
                 }
             }
-            max += aktualnyMaksRury;
-            System.out.println(aktualnyMaksRury+ " chwilowy dla" + rozmiarRury);
 
-            for(int j = 0;j < indexyDoKasacji.length;j++) {
-                if(indexyDoKasacji[j] != 0){
-                    puszki[indexyDoKasacji[j]][0] = 0;
+            for (int i = 2; i <= liczbaPuszek; i++) {
+                int wysokoscPuszki = puszki[i-1][0];
+                int wartoscPuszki = puszki[i-1][1];
+
+                for (int j = 1; j <= rozmiarRury; j++) {
+                    if ( j < wysokoscPuszki) {
+                        tab[i][j] = tab[i-1][j];
+                    } else {
+                        tab[i][j] = Math.max(wartoscPuszki + tab[i - 1][j - wysokoscPuszki], tab[i - 1][j]);
+                    }
+                }
+            }
+            max += tab[liczbaPuszek][rozmiarRury];
+
+
+            if(tab[liczbaPuszek][rozmiarRury-1] == tab[liczbaPuszek][rozmiarRury]) {
+                System.out.println("NIE");
+                exit(0);
+            }
+
+
+            while(liczbaPuszek != 0 || rozmiarRury != 0) {
+                if(tab[liczbaPuszek][rozmiarRury] == tab[liczbaPuszek-1][rozmiarRury]) {
+                    liczbaPuszek--;
+                } else {
+                    rozmiarRury -= puszki[liczbaPuszek-1][0];
+                    puszki[liczbaPuszek-1][0] = 0;
+                    puszki[liczbaPuszek-1][1] = 0;
                 }
             }
         }
         System.out.println(max);
-
     }
-
 }
