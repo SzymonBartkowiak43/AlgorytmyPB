@@ -1,13 +1,16 @@
 public class BYLECO {
+    public static int janek = 0;
     public static void main(String[] args) {
-        int n = 5;
-        int suma = 0;
-
-        for(int i=1;i<=n;i*=2) {
-           for(int j =1; j<=n;j++) {
-               suma++;
-           }
+        System.out.println(janek);
+        f2(5);
+        System.out.println(janek);
+    }
+    public static void f2(int n) {
+        janek++;
+        if(n == 1)
+            return;
+        for(int i=1; i <=3;i++) {
+            f2(n-1);
         }
-        System.out.println(suma);
     }
 }
