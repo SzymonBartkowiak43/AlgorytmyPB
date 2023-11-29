@@ -27,32 +27,39 @@ public class Algorytm3spD {
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Wypisz wypisz = new Wypisz();
         MergeS merge = new MergeS();
         merge.mergeSort(godzinyZajete,0,godzinyZajete.length-1,1);
-        wypisz.print(godzinyZajete);
 
         int []tab = new int[25];
         Arrays.fill(tab,0);
         int poczatek = 0;
         int koniec = 0;
+        int dlugosc = 0;
+        int godzina = 1;
 
         for(int i = 0; i < godzinyZajete.length; i++) {
-
             poczatek = godzinyZajete[i][0];
             koniec = godzinyZajete[i][1];
 
-            ///jest lipa
+            dlugosc = koniec-poczatek;
 
+            while(godzina < koniec && godzina-1 >= 0) {
+                if(tab[godzina] < tab[godzina-1]) {
+                    tab[godzina] = tab[godzina-1];
+                }
+                godzina++;
+            }
 
+            if(tab[godzina-1] > dlugosc + tab[godzina-dlugosc]) {
+                tab[godzina] = tab[godzina-1];
+            } else {
+                tab[godzina] = dlugosc + tab[godzina-dlugosc];
+            }
         }
-
-        for(int liczba: tab) {
-            System.out.print(liczba+ " ");
+        while(godzina < 25) {
+            tab[godzina] = tab[godzina-1];
+            godzina++;
         }
-
-
-
+        System.out.println(tab[godzina-1]);
     }
-
 }
