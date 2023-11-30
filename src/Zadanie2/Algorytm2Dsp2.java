@@ -226,6 +226,7 @@ public class Algorytm2Dsp2 {
                 System.out.print(anInt + " ");
             }
             System.out.println();
+            
         }
     }
 

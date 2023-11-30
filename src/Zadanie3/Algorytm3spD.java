@@ -37,24 +37,20 @@ public class Algorytm3spD {
         int dlugosc = 0;
         int godzina = 1;
 
-        for(int i = 0; i < godzinyZajete.length; i++) {
-            poczatek = godzinyZajete[i][0];
-            koniec = godzinyZajete[i][1];
+        for (int[] wyklad : godzinyZajete) {
+            poczatek = wyklad[0];
+            koniec = wyklad[1];
 
-            dlugosc = koniec-poczatek;
+            dlugosc = koniec - poczatek;
 
-            while(godzina < koniec && godzina-1 >= 0) {
-                if(tab[godzina] < tab[godzina-1]) {
-                    tab[godzina] = tab[godzina-1];
+            while (godzina < koniec && godzina - 1 >= 0) {
+                if (tab[godzina] < tab[godzina - 1]) {
+                    tab[godzina] = tab[godzina - 1];
                 }
                 godzina++;
             }
 
-            if(tab[godzina-1] > dlugosc + tab[godzina-dlugosc]) {
-                tab[godzina] = tab[godzina-1];
-            } else {
-                tab[godzina] = dlugosc + tab[godzina-dlugosc];
-            }
+            tab[godzina] = Math.max(tab[godzina - 1], dlugosc + tab[godzina - dlugosc]);
         }
         while(godzina < 25) {
             tab[godzina] = tab[godzina-1];

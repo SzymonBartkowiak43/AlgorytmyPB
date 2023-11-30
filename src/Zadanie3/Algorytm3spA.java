@@ -39,9 +39,7 @@ public class Algorytm3spA {
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
-
+        Wypisz wypisz = new Wypisz();
         Collections.sort(rury);
         int max = 0;
         int liczbaPuszek;
@@ -94,6 +92,8 @@ public class Algorytm3spA {
                     puszki[liczbaPuszek-1][1] = 0;
                 }
             }
+            wypisz.print(tab);
+            System.out.println();
         }
         System.out.println(max);
     }
