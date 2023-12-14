@@ -29,6 +29,7 @@ public class Algorytm3spA {
                 puszki[i][1] = Integer.parseInt(tym[1]);
             }
 
+            //wczytuje rury
             lines.remove(0);
             for(String line: lines) {
                 tym = line.split(" ");
@@ -39,10 +40,13 @@ public class Algorytm3spA {
         }catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+
         Wypisz wypisz = new Wypisz();
         Collections.sort(rury);
         int max = 0;
         int liczbaPuszek;
+        int licznik = 0;
 
         for (int rozmiarRury : rury) {
             int aktualnyMaksRury = 0;
@@ -53,6 +57,7 @@ public class Algorytm3spA {
                 tab[0][i] = 0;
             for (int i = 0; i <= liczbaPuszek; i++)
                 tab[i][0] = 0;
+
 
             for (int j = 1; j <= rozmiarRury; j++) {
                 int wysokoscPuszki = puszki[0][0];
@@ -72,9 +77,11 @@ public class Algorytm3spA {
                     } else {
                         tab[i][j] = Math.max(wartoscPuszki + tab[i - 1][j - wysokoscPuszki], tab[i - 1][j]);
                     }
+                    licznik++;
                 }
             }
             max += tab[liczbaPuszek][rozmiarRury];
+            wypisz.print(tab);
 
 
             if(tab[liczbaPuszek][rozmiarRury-1] == tab[liczbaPuszek][rozmiarRury]) {
@@ -92,9 +99,8 @@ public class Algorytm3spA {
                     puszki[liczbaPuszek-1][1] = 0;
                 }
             }
-            wypisz.print(tab);
-            System.out.println();
         }
         System.out.println(max);
+        System.out.println(licznik);
     }
 }

@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
+
 
 public class Dodatkowe {
     public static void main(String[] args) {
@@ -31,39 +31,32 @@ public class Dodatkowe {
         }
         quicksort(tab);
 
-        for(int i = 0; i < size;i++){
-            secondTab[i] = 0;
-        }
 
+        Arrays.fill(secondTab, 0, size, 0);
 
         int counterTab = 0;
         int counterSecondTab = 0;
         int wynik = 0;
-        for(int i = 0;i < size;i++) {
-            int firstElemnt;
-            int secondElemnt;
-            if(counterTab >= size) {
-                break;
-            }
-            
-            if(tab[counterTab] > secondTab[counterSecondTab]) {
-                firstElemnt = tab[counterTab];
-                counterTab++;
+        int firstElemnt;
+        int secondElemnt;
+        for (int i = 0; i < size - 1; i++) {
+
+
+            if(secondTab[counterSecondTab]  == 0) {
+                firstElemnt = tab[counterTab++];
             } else {
-                firstElemnt = secondTab[counterSecondTab];
-                counterSecondTab++;
+                firstElemnt = (tab[counterTab] < secondTab[counterSecondTab]) ? tab[counterTab++] : secondTab[counterSecondTab++];
+            }
+            if(secondTab[counterSecondTab]  == 0) {
+                secondElemnt = tab[counterTab++];
+            } else {
+                secondElemnt = (tab[counterTab] < secondTab[counterSecondTab]) ? tab[counterTab++] : secondTab[counterSecondTab++];
             }
 
-            if(tab[counterTab] > secondTab[counterSecondTab]) {
-                secondElemnt = tab[counterTab];
-                counterTab++;
-            } else {
-                secondElemnt = secondTab[counterSecondTab];
-                counterSecondTab++;
-            }
-            secondTab[counterSecondTab] = firstElemnt+secondElemnt;
-
+            secondTab[counterSecondTab] = firstElemnt + secondElemnt;
+            System.out.println("Pierwszy: " + firstElemnt + "Drugi: " + secondElemnt);
             wynik += firstElemnt + secondElemnt;
+            System.out.println(wynik);
         }
         System.out.println(wynik);
 
