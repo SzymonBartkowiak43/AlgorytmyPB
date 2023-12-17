@@ -36,8 +36,10 @@ public class Algorytm3spD {
         int koniec = 0;
         int dlugosc = 0;
         int godzina = 1;
+        int licznik = 0;
 
         for (int[] wyklad : godzinyZajete) {
+            licznik++;
             poczatek = wyklad[0];
             koniec = wyklad[1];
 
@@ -48,6 +50,7 @@ public class Algorytm3spD {
                     tab[godzina] = tab[godzina - 1];
                 }
                 godzina++;
+                licznik++;
             }
 
             tab[godzina] = Math.max(tab[godzina - 1], dlugosc + tab[godzina - dlugosc]);
@@ -56,6 +59,12 @@ public class Algorytm3spD {
             tab[godzina] = tab[godzina-1];
             godzina++;
         }
+
+        for (int j : tab) {
+            System.out.print(j + " ");
+        }
+        System.out.println();
         System.out.println(tab[godzina-1]);
+        System.out.println("Licznik: " + licznik);
     }
 }
