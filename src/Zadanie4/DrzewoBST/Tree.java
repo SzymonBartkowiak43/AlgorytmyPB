@@ -80,18 +80,69 @@ public class Tree {
             deletedNode = getWezel(value);
         }
 
+
         if (deletedNode.getRightNode() == null && deletedNode.getLeftNode() == null) {
-            if (deletedNode == root) {
-                root = null;
+            extracted(deletedNode);
+            System.out.println("0");
+        } else if(deletedNode.getRightNode() != null && deletedNode.getLeftNode() != null) {
+            extracted2(deletedNode);
+            System.out.println("2");
+        } else {
+
+            extracted1(deletedNode);
+            System.out.println("1");
+        }
+
+    }
+
+    private static void extracted2(Node deletedNode) {
+        Node right = deletedNode.getRightNode();
+        boolean licznik = true;
+        while (right.getLeftNode() != null) {
+            right = right.getLeftNode();
+            licznik = false;
+        }
+        deletedNode.setValue(right.getValue());
+
+        if(licznik) {
+            right.getParent().setLeftNode(null);
+        } else {
+            right.getParent().setLeftNode(right.getRightNode());
+        }
+    }
+
+    private void extracted1(Node deletedNode) {
+        Node parent;
+        parent = deletedNode.getParent();
+        if(deletedNode == parent.getRightNode()) {
+            if(deletedNode.getRightNode() == null) {
+                parent.setRightNode(deletedNode.getLeftNode());
             } else {
-               parent = deletedNode.getParent();
-               parent.setRightNode(null);
-               parent.setLeftNode(null);
+                parent.setRightNode(deletedNode.getRightNode());
+            }
+        } else {
+            if(deletedNode.getRightNode() == null) {
+                parent.setLeftNode(deletedNode.getLeftNode());
+            } else {
+                parent.setLeftNode(deletedNode.getRightNode());
             }
         }
 
     }
 
+    private void extracted(Node deletedNode) {
+        Node parent;
+        if (deletedNode == root) {
+            root = null;
+        } else {
+           parent = deletedNode.getParent();
+           if(parent.getRightNode() == deletedNode) {
+               parent.setRightNode(null);
+           } else {
+               parent.setLeftNode(null);
+           }
+        }
+    }
 
 
 }
