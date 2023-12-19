@@ -70,8 +70,6 @@ public class Tree {
 
 
     public void deleteNood(int value) {
-        Node current = root;
-        Node parent;
         Node deletedNode;
 
         if (!findNood(value)) {
@@ -88,32 +86,31 @@ public class Tree {
             extracted2(deletedNode);
             System.out.println("2");
         } else {
-
             extracted1(deletedNode);
             System.out.println("1");
         }
 
+
     }
 
-    private static void extracted2(Node deletedNode) {
-        Node right = deletedNode.getRightNode();
+    private void extracted2(Node deletedNode) {
+        Node max = deletedNode.getRightNode();
         boolean licznik = true;
-        while (right.getLeftNode() != null) {
-            right = right.getLeftNode();
+        while (max.getLeftNode() != null) {
+            max = max.getLeftNode();
             licznik = false;
         }
-        deletedNode.setValue(right.getValue());
+        deletedNode.setValue(max.getValue());
 
         if(licznik) {
-            right.getParent().setLeftNode(null);
+            deletedNode.setRightNode(max.getRightNode());
         } else {
-            right.getParent().setLeftNode(right.getRightNode());
+            max.getParent().setLeftNode(null);
         }
     }
 
     private void extracted1(Node deletedNode) {
-        Node parent;
-        parent = deletedNode.getParent();
+        Node parent = deletedNode.getParent();
         if(deletedNode == parent.getRightNode()) {
             if(deletedNode.getRightNode() == null) {
                 parent.setRightNode(deletedNode.getLeftNode());
@@ -131,17 +128,28 @@ public class Tree {
     }
 
     private void extracted(Node deletedNode) {
-        Node parent;
         if (deletedNode == root) {
             root = null;
         } else {
-           parent = deletedNode.getParent();
+           Node parent = deletedNode.getParent();
            if(parent.getRightNode() == deletedNode) {
                parent.setRightNode(null);
            } else {
                parent.setLeftNode(null);
            }
         }
+    }
+
+    private void print(Node node) {
+        if (node != null) {
+            print(node.getLeftNode());
+            System.out.print(node.getValue() + " ");
+            print(node.getRightNode());
+        }
+    }
+
+    public void print() {
+        print(root);
     }
 
 

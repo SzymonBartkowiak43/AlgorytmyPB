@@ -13,8 +13,8 @@ public class Main {
         drzewko.addWezel(6);
         drzewko.addWezel(1);
         drzewko.addWezel(4);
-        drzewko.addWezel(7);
-        drzewko.addWezel(8);
+
+        drzewko.print();
 
 
 
