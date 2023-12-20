@@ -4,10 +4,10 @@ public class Node {
     private Node parent;
     private Node leftNode;
     private Node rightNode;
-    private int value;
+    private Abonent abonent;
 
-    public Node(int value) {
-        this.value = value;
+    public Node(Abonent abonent) {
+        this.abonent = abonent;
         parent = null;
         leftNode = null;
         rightNode = null;
@@ -37,11 +37,11 @@ public class Node {
         this.rightNode = rightNode;
     }
 
-    public int getValue() {
-        return value;
+    public String getValue() {
+        return abonent.getName() + ", "+ abonent.getAdres();
     }
 
-    public void setValue(Integer value) {
-        this.value = value;
+    public void setValue(Abonent abonent) {
+        this.abonent = abonent;
     }
 }

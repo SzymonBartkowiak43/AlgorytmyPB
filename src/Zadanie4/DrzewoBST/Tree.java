@@ -7,21 +7,23 @@ public class Tree {
         this.root = root;
     }
 
-    public Node getWezel(int key) {
+    public Node getWezel(String key) {
         Node current = root;
         while (current != null) {
-            if (key == current.getValue()) {
-                return current;
-            } else if (key > current.getValue()) {
+            int value = key.compareTo(current.getValue());
+
+            if (value < 0) {
                 current = current.getRightNode();
-            } else {
+            } else if (value > 0) {
                 current = current.getLeftNode();
+            } else {
+                return current;
             }
         }
         throw new NullPointerException("Nie znaleziono wezla");
     }
 
-    public void addWezel (int value) {
+    public void addWezel (String value) {
         Node parent = null;
         Node current = root;
 
@@ -30,6 +32,7 @@ public class Tree {
             if(current.getValue() == value) {
                 return;
             }
+
 
             if(value > current.getValue()) {
                 current = current.getRightNode();
