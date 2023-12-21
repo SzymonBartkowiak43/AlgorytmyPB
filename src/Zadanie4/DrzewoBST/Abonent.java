@@ -1,24 +1,17 @@
 package Zadanie4.DrzewoBST;
 
 public class Abonent {
-    private String name;
-    private String adres;
+    private String nameAndAdres;
     private String number;
 
-    public Abonent(String name, String adres, String number) {
-        this.name = name;
-        this.adres = adres;
+    public Abonent(String name,  String number) {
+        this.nameAndAdres = name;
         this.number = number;
     }
 
     public String getName() {
-        return name;
+        return nameAndAdres;
     }
-
-    public String getAdres() {
-        return adres;
-    }
-
     public String getNumber() {
         return number;
     }
