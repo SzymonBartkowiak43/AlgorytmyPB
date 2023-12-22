@@ -38,7 +38,7 @@ public class Node {
     }
 
     public String getValue() {
-        return abonent.getName() + ", "+ abonent.getAdres();
+        return abonent.getName();
     }
 
     public void setValue(Abonent abonent) {

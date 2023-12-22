@@ -4,20 +4,15 @@
 
 public class BYLECO {
     public static void main(String[] args) {
-        int n = 10;
-        int liczbaSpacji = n-1;
-        int liczbaGwiazdek = 1;
+        String pierwszy = "Kamil Kozak, polna 21";
+        String drugi = "Marta Migdał, polna 33";
 
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < liczbaSpacji; j++) {
-                System.out.print(" ");
-            }
-            for(int j = 0; j < liczbaGwiazdek; j++) {
-                System.out.print("*");
-            }
-            liczbaGwiazdek+=2;
-            liczbaSpacji--;
-            System.out.println();
+        int result = pierwszy.compareTo(drugi);
+
+        if (result < 0) {
+            System.out.println(drugi);
+        } else if (result > 0) {
+            System.out.println(pierwszy);
         }
     }
 }

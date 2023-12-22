@@ -10,11 +10,11 @@ public class Tree {
     public Node getWezel(String key) {
         Node current = root;
         while (current != null) {
-            int value = key.compareTo(current.getValue());
+            int value = whichBigger(current.getValue(), key);
 
-            if (value < 0) {
+            if (value == 2) {
                 current = current.getRightNode();
-            } else if (value > 0) {
+            } else if (value == 1) {
                 current = current.getLeftNode();
             } else {
                 return current;
@@ -23,62 +23,67 @@ public class Tree {
         throw new NullPointerException("Nie znaleziono wezla");
     }
 
-    public void addWezel (String value) {
+    public void addWezel (Abonent abonent) {
         Node parent = null;
         Node current = root;
 
         while(current != null) {
             parent = current;
-            if(current.getValue() == value) {
+            if (current.getValue().equals(abonent.getName())) {
                 return;
             }
-
-
-            if(value > current.getValue()) {
+            int which = whichBigger(current.getValue(), abonent.getName());
+            if (which == 2) {
                 current = current.getRightNode();
-            } else if (value < current.getValue()) {
+            } else if (which == 1) {
                 current = current.getLeftNode();
             }
         }
 
-        Node tmp = new Node(value);
-        if(parent == null) {
-            root = tmp;
-        } else if( value > parent.getValue()) {
-            parent.setRightNode(tmp);
-            tmp.setParent(parent);
-        } else if(value < parent.getValue()) {
-            parent.setLeftNode(tmp);
-            tmp.setParent(parent);
-        }
-    }
 
-    public boolean findNood(int value) {
+            Node tmp = new Node(abonent);
+            if (parent == null) {
+                root = tmp;
+                return;
+            }
+            int value = whichBigger(parent.getValue(), abonent.getName());
+
+            if (value == 2) {
+                parent.setRightNode(tmp);
+                tmp.setParent(parent);
+            } else if (value == 1) {
+                parent.setLeftNode(tmp);
+                tmp.setParent(parent);
+            }
+        }
+
+    public boolean findNood(String name) {
         Node current = root;
 
         while(true) {
-            if(current.getValue() > value) {
+            int value = whichBigger(current.getValue(), name);
+            if(value == 1) {
                 current = current.getLeftNode();
-            } else if (current.getValue() < value) {
+            } else if (value == 2) {
                 current = current.getRightNode();
             }
 
             if(current == null) {
                 return false;
-            }else if(current.getValue() == value) {
+            }else if(current.getValue().equals(name)) {
                 return true;
             }
         }
     }
 
 
-    public void deleteNood(int value) {
+    public void deleteNood(String name) {
         Node deletedNode;
 
-        if (!findNood(value)) {
+        if (!findNood(name)) {
             return;
         } else {
-            deletedNode = getWezel(value);
+            deletedNode = getWezel(name);
         }
 
 
@@ -103,7 +108,7 @@ public class Tree {
             max = max.getLeftNode();
             licznik = false;
         }
-        deletedNode.setValue(max.getValue());
+        //deletedNode.setValue(max.getValue());
 
         if(licznik) {
             deletedNode.setRightNode(max.getRightNode());
@@ -129,6 +134,15 @@ public class Tree {
         }
 
     }
+    private int whichBigger(String pierwszy, String drugi) {
+        int result = pierwszy.compareTo(drugi);
+        if (result < 0) {
+            return 2; // w Prawo
+        } else if (result > 0) {
+            return 1; // w Lewo
+        }
+        return 0;
+    }
 
     private void extracted(Node deletedNode) {
         if (deletedNode == root) {
@@ -146,7 +160,7 @@ public class Tree {
     private void print(Node node) {
         if (node != null) {
             print(node.getLeftNode());
-            System.out.print(node.getValue() + " ");
+            System.out.print(node.getValue() + " |||| ");
             print(node.getRightNode());
         }
     }
