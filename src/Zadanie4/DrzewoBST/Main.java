@@ -19,6 +19,13 @@ public class Main {
         drzewko.addWezel(uztkownik5);
 
         drzewko.print();
+        System.out.println();
+
+
+        drzewko.deleteNood("Wanda Wódka, Polna 25");
+        drzewko.deleteNood("Maks Świr, Polna 26");
+
+        drzewko.print();
 
 
     }

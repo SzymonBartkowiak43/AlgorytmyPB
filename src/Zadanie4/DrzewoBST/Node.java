@@ -40,6 +40,10 @@ public class Node {
     public String getValue() {
         return abonent.getName();
     }
+    public Abonent getAbonent() {
+        return abonent;
+    }
+
 
     public void setValue(Abonent abonent) {
         this.abonent = abonent;

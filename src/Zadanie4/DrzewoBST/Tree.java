@@ -108,7 +108,7 @@ public class Tree {
             max = max.getLeftNode();
             licznik = false;
         }
-        //deletedNode.setValue(max.getValue());
+        deletedNode.setValue(max.getAbonent());
 
         if(licznik) {
             deletedNode.setRightNode(max.getRightNode());
@@ -119,6 +119,7 @@ public class Tree {
 
     private void extracted1(Node deletedNode) {
         Node parent = deletedNode.getParent();
+
         if(deletedNode == parent.getRightNode()) {
             if(deletedNode.getRightNode() == null) {
                 parent.setRightNode(deletedNode.getLeftNode());
@@ -130,6 +131,7 @@ public class Tree {
                 parent.setLeftNode(deletedNode.getLeftNode());
             } else {
                 parent.setLeftNode(deletedNode.getRightNode());
+
             }
         }
 
