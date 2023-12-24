@@ -7,7 +7,7 @@ public class Tree {
         this.root = root;
     }
 
-    public Node getWezel(String key) {
+    public Node getNood(String key) {
         Node current = root;
         while (current != null) {
             int value = whichBigger(current.getValue(), key);
@@ -23,7 +23,7 @@ public class Tree {
         throw new NullPointerException("Nie znaleziono wezla");
     }
 
-    public void addWezel (Abonent abonent) {
+    public void addNood(Abonent abonent) {
         Node parent = null;
         Node current = root;
 
@@ -57,85 +57,71 @@ public class Tree {
             }
         }
 
-    public boolean findNood(String name) {
-        Node current = root;
-
-        while(true) {
-            int value = whichBigger(current.getValue(), name);
-            if(value == 1) {
-                current = current.getLeftNode();
-            } else if (value == 2) {
-                current = current.getRightNode();
-            }
-
-            if(current == null) {
-                return false;
-            }else if(current.getValue().equals(name)) {
-                return true;
-            }
-        }
-    }
-
-
     public void deleteNood(String name) {
-        Node deletedNode;
+        Node deletedNode = getNood(name);
 
-        if (!findNood(name)) {
+        if (deletedNode == null) {
+            System.out.println("Nie znaleziono węzła do usunięcia.");
             return;
-        } else {
-            deletedNode = getWezel(name);
         }
 
-
-        if (deletedNode.getRightNode() == null && deletedNode.getLeftNode() == null) {
-            extracted(deletedNode);
+        if (deletedNode.getLeftNode() == null && deletedNode.getRightNode() == null) {
             System.out.println("0");
-        } else if(deletedNode.getRightNode() != null && deletedNode.getLeftNode() != null) {
-            extracted2(deletedNode);
+            deleteWithNoChildren(deletedNode);
+        } else if (deletedNode.getLeftNode() != null && deletedNode.getRightNode() != null) {
             System.out.println("2");
+            deleteNodeWithTwoChildren(deletedNode);
         } else {
-            extracted1(deletedNode);
             System.out.println("1");
+            deleteNodeWithOneChild(deletedNode);
         }
 
-
+        System.out.println("Usunięto węzeł: " + name);
     }
 
-    private void extracted2(Node deletedNode) {
-        Node max = deletedNode.getRightNode();
-        boolean licznik = true;
-        while (max.getLeftNode() != null) {
-            max = max.getLeftNode();
-            licznik = false;
-        }
-        deletedNode.setValue(max.getAbonent());
-
-        if(licznik) {
-            deletedNode.setRightNode(max.getRightNode());
-        } else {
-            max.getParent().setLeftNode(null);
-        }
-    }
-
-    private void extracted1(Node deletedNode) {
+    private void deleteNodeWithOneChild(Node deletedNode) {
         Node parent = deletedNode.getParent();
+        Node child = (deletedNode.getLeftNode() != null) ? deletedNode.getLeftNode() : deletedNode.getRightNode();
 
-        if(deletedNode == parent.getRightNode()) {
-            if(deletedNode.getRightNode() == null) {
-                parent.setRightNode(deletedNode.getLeftNode());
-            } else {
-                parent.setRightNode(deletedNode.getRightNode());
-            }
+        if (parent == null) {
+            root = child;
         } else {
-            if(deletedNode.getRightNode() == null) {
-                parent.setLeftNode(deletedNode.getLeftNode());
+            if (parent.getLeftNode() == deletedNode) {
+                parent.setLeftNode(child);
             } else {
-                parent.setLeftNode(deletedNode.getRightNode());
+                parent.setRightNode(child);
+            }
+            child.setParent(parent);
+        }
+    }
 
+    private void deleteNodeWithTwoChildren(Node deletedNode) {
+        Node successor = getSuccessor(deletedNode);
+        deleteNood(successor.getValue());
+        deletedNode.setValue(successor.getAbonent());
+    }
+
+    private Node getSuccessor(Node node) {
+        Node successor = node.getRightNode();
+        while (successor.getLeftNode() != null) {
+            successor = successor.getLeftNode();
+        }
+        return successor;
+    }
+
+    private void deleteWithNoChildren(Node deletedNode) {
+        Node parent = deletedNode.getParent();
+        if (parent == null) {
+            root = null;
+        } else {
+            if (parent.getLeftNode() == deletedNode) {
+                parent.setLeftNode(null);
+            } else {
+                parent.setRightNode(null);
             }
         }
-
     }
+
     private int whichBigger(String pierwszy, String drugi) {
         int result = pierwszy.compareTo(drugi);
         if (result < 0) {
@@ -144,19 +130,6 @@ public class Tree {
             return 1; // w Lewo
         }
         return 0;
-    }
-
-    private void extracted(Node deletedNode) {
-        if (deletedNode == root) {
-            root = null;
-        } else {
-           Node parent = deletedNode.getParent();
-           if(parent.getRightNode() == deletedNode) {
-               parent.setRightNode(null);
-           } else {
-               parent.setLeftNode(null);
-           }
-        }
     }
 
     private void print(Node node) {
@@ -170,6 +143,4 @@ public class Tree {
     public void print() {
         print(root);
     }
-
-
 }
