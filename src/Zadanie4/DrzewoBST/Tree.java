@@ -66,17 +66,12 @@ public class Tree {
         }
 
         if (deletedNode.getLeftNode() == null && deletedNode.getRightNode() == null) {
-            System.out.println("0");
-            deleteWithNoChildren(deletedNode);
+            deleteWithNoChildren(deletedNode); //0
         } else if (deletedNode.getLeftNode() != null && deletedNode.getRightNode() != null) {
-            System.out.println("2");
-            deleteNodeWithTwoChildren(deletedNode);
+            deleteNodeWithTwoChildren(deletedNode); //2
         } else {
-            System.out.println("1");
-            deleteNodeWithOneChild(deletedNode);
+            deleteNodeWithOneChild(deletedNode); //1
         }
-
-        System.out.println("Usunięto węzeł: " + name);
     }
 
     private void deleteNodeWithOneChild(Node deletedNode) {
@@ -142,5 +137,19 @@ public class Tree {
 
     public void print() {
         print(root);
+    }
+
+    private int counter(Node node) {
+        int count = 0;
+        if (node != null) {
+            count += counter(node.getLeftNode());
+            count++;
+            count += counter(node.getRightNode());
+        }
+        return count;
+    }
+
+    public int counter() {
+        return counter(root);
     }
 }

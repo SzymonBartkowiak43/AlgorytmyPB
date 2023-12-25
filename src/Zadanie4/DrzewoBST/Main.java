@@ -46,14 +46,15 @@ public class Main {
         drzewko.addNood(uztkownik19);
         drzewko.addNood(uztkownik20);
 
-        drzewko.print();
+        System.out.println(drzewko.counter());
         System.out.println();
 
 
         drzewko.deleteNood("Wanda Wódka, Polna 25");
         drzewko.deleteNood("Maks Świr, Polna 26");
+        drzewko.deleteNood("Maks Świr, Polna 26");
 
-        drzewko.print();
+        System.out.println(drzewko.counter());
 
 
     }
