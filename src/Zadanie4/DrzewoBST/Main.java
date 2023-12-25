@@ -52,7 +52,6 @@ public class Main {
 
         drzewko.deleteNood("Wanda Wódka, Polna 25");
         drzewko.deleteNood("Maks Świr, Polna 26");
-        drzewko.deleteNood("Maks Świr, Polna 26");
 
         System.out.println(drzewko.counter());
 
