@@ -23,6 +23,11 @@ public class Tree {
         throw new NullPointerException("Nie znaleziono wezla");
     }
 
+    public String getNumer(String key) {
+        Node node = getNood(key);
+        return node.getAbonent().getNumber();
+    }
+
     public void addNood(Abonent abonent) {
         Node parent = null;
         Node current = root;

@@ -54,6 +54,7 @@ public class Main {
         drzewko.deleteNood("Maks Świr, Polna 26");
 
         System.out.println(drzewko.counter());
+        System.out.println(drzewko.getNumer("Jan Paleta, Polna 21"));
 
 
     }
