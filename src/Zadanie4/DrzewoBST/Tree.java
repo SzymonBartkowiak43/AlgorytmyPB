@@ -1,5 +1,8 @@
 package Zadanie4.DrzewoBST;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Tree {
     private Node root;
 
@@ -20,12 +23,16 @@ public class Tree {
                 return current;
             }
         }
-        throw new NullPointerException("Nie znaleziono wezla");
+        return null; //if dont find
     }
 
     public String getNumer(String key) {
         Node node = getNood(key);
-        return node.getAbonent().getNumber();
+        try{
+            return node.getAbonent().getNumber();
+        } catch (NullPointerException e) {
+            return "Nie znaleziono Abonenta";
+        }
     }
 
     public void addNood(Abonent abonent) {
@@ -156,5 +163,22 @@ public class Tree {
 
     public int counter() {
         return counter(root);
+    }
+
+    private void save(Node node, FileWriter fw) throws IOException {
+        if (node != null) {
+            save(node.getLeftNode(), fw);
+            String userData = node.getAbonent().getName() + ";" + node.getAbonent().getNumber()+ "\n";
+            fw.write(userData);
+            save(node.getRightNode(), fw);
+        }
+    }
+
+    public void save() {
+        try (FileWriter fw = new FileWriter("src/Zadanie4/DrzewoBST/Abonenci.csv", false)) {
+            save(root, fw);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
