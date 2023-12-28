@@ -14,7 +14,6 @@ public class Tree {
         Node current = root;
         while (current != null) {
             int value = whichBigger(current.getValue(), key);
-
             if (value == 2) {
                 current = current.getRightNode();
             } else if (value == 1) {
@@ -23,7 +22,7 @@ public class Tree {
                 return current;
             }
         }
-        return null; //if dont find
+        return null; //if don't find
     }
 
     public String getNumer(String key) {
@@ -84,6 +83,7 @@ public class Tree {
         } else {
             deleteNodeWithOneChild(deletedNode); //1
         }
+        System.out.println("Usunieto " + name);
     }
 
     private void deleteNodeWithOneChild(Node deletedNode) {
@@ -142,7 +142,7 @@ public class Tree {
     private void print(Node node) {
         if (node != null) {
             print(node.getLeftNode());
-            System.out.print(node.getValue() + " |||| ");
+            System.out.println(node.getValue() + " -> " + node.getAbonent().getNumber());
             print(node.getRightNode());
         }
     }
