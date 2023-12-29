@@ -1,8 +1,8 @@
 package Zadanie4.DrzewoBST;
 
 public class Abonent {
-    private String nameAndAdres;
-    private String number;
+    private final String nameAndAdres;
+    private final String number;
 
     public Abonent(String name,  String number) {
         this.nameAndAdres = name;
@@ -12,6 +12,7 @@ public class Abonent {
     public String getName() {
         return nameAndAdres;
     }
+
     public String getNumber() {
         return number;
     }
