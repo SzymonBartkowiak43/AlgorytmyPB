@@ -40,26 +40,26 @@ public class Main {
                     String phoneNumber = scanner.nextLine();
                     drzewko.addNood(new Abonent(name, phoneNumber));
                     System.out.println("Dodano");
-                    drzewko.save();
+                    //drzewko.save();
                     break;
 
                 case 2:
                     System.out.print("Podaj imie i adres: ");
                     String nameToFind = scanner.nextLine();
                     System.out.print("Numer Telefonu: " +  drzewko.getNumer(nameToFind) + "\n");
-                    drzewko.save();
+                    //drzewko.save();
                     break;
 
                 case 3:
                     System.out.println("Podaj imie i adres: ");
                     String nameToDelete = scanner.nextLine();
                     drzewko.deleteNood(nameToDelete);
-                    drzewko.save();
+                    //drzewko.save();
                     break;
 
                 case 4:
                     drzewko.print();
-                    drzewko.save();
+                    //drzewko.save();
                     break;
 
                 case 5:
