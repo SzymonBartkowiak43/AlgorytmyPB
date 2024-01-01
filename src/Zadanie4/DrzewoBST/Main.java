@@ -31,7 +31,6 @@ public class Main {
             System.out.println("1- Dodaj, 2- Znajdz, 3- Usun, 4- Wypisz, 5- Wyjdz");
             int choice = scanner.nextInt();
             scanner.nextLine();
-
             switch (choice) {
                 case 1:
                     System.out.println("Podaj imie i adres: ");
