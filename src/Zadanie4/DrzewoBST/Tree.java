@@ -51,22 +51,30 @@ public class Tree {
             }
         }
 
+        Node tmp = new Node(abonent);
+        if (parent == null) {
+            root = tmp;
+            return;
+        }
+        int value = whichBigger(parent.getValue(), abonent.getName());
 
-            Node tmp = new Node(abonent);
-            if (parent == null) {
-                root = tmp;
-                return;
-            }
-            int value = whichBigger(parent.getValue(), abonent.getName());
+        if (value == 2) {
+            parent.setRightNode(tmp);
+            tmp.setParent(parent);
+        } else if (value == 1) {
+            parent.setLeftNode(tmp);
+            tmp.setParent(parent);
+        }
 
-            if (value == 2) {
-                parent.setRightNode(tmp);
-                tmp.setParent(parent);
-            } else if (value == 1) {
-                parent.setLeftNode(tmp);
-                tmp.setParent(parent);
+        while (parent.getWeight() != 0 && parent.getWeight() > 2 && parent.getWeight() < -2) {
+            if(parent.getLeftNode() == parent) {
+                parent.incrementWeight();
+            } else if(parent.getRightNode() == parent){
+                parent.decrementWeight();
             }
         }
+
+    }
 
     public void deleteNood(String name) {
         Node deletedNode = getNood(name);

@@ -5,12 +5,14 @@ public class Node {
     private Node leftNode;
     private Node rightNode;
     private Abonent abonent;
+    private int weight;
 
     public Node(Abonent abonent) {
         this.abonent = abonent;
         parent = null;
         leftNode = null;
         rightNode = null;
+        weight = 0;
     }
 
     public Node getParent() {
@@ -44,8 +46,23 @@ public class Node {
         return abonent;
     }
 
-
     public void setValue(Abonent abonent) {
         this.abonent = abonent;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void incrementWeight(){
+        weight++;
+    }
+
+    public void decrementWeight(){
+        weight--;
     }
 }
