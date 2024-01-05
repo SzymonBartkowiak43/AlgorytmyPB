@@ -38,7 +38,7 @@ public class Tree {
         Node parent = null;
         Node current = root;
 
-        while(current != null) {
+        while (current != null) {
             parent = current;
             if (current.getValue().equals(abonent.getName())) {
                 return;
@@ -54,27 +54,123 @@ public class Tree {
         Node tmp = new Node(abonent);
         if (parent == null) {
             root = tmp;
-            return;
-        }
-        int value = whichBigger(parent.getValue(), abonent.getName());
+        } else {
+            int value = whichBigger(parent.getValue(), abonent.getName());
 
-        if (value == 2) {
-            parent.setRightNode(tmp);
-            tmp.setParent(parent);
-        } else if (value == 1) {
-            parent.setLeftNode(tmp);
-            tmp.setParent(parent);
-        }
+            if (value == 2) {
+                parent.setRightNode(tmp);
+                tmp.setParent(parent);
+            } else if (value == 1) {
+                parent.setLeftNode(tmp);
+                tmp.setParent(parent);
+            }
 
-        while (parent.getWeight() != 0 && parent.getWeight() > 2 && parent.getWeight() < -2) {
-            if(parent.getLeftNode() == parent) {
-                parent.incrementWeight();
-            } else if(parent.getRightNode() == parent){
-                parent.decrementWeight();
+            balanceTree(parent);
+        }
+    }
+
+    private void balanceTree(Node node) {
+        updateHeight(node);
+
+        int balance = getBalance(node);
+
+        if (balance > 1) {
+            if (getHeight(node.getLeftNode().getLeftNode()) >= getHeight(node.getLeftNode().getRightNode())) {
+                // Rotacja w prawo
+                rotateRight(node);
+            } else {
+                // Podwójna rotacja: najpierw lewo, potem prawo
+                rotateLeft(node.getLeftNode());
+                rotateRight(node);
+            }
+        } else if (balance < -1) {
+            if (getHeight(node.getRightNode().getRightNode()) >= getHeight(node.getRightNode().getLeftNode())) {
+                // Rotacja w lewo
+                rotateLeft(node);
+            } else {
+                // Podwójna rotacja: najpierw prawo, potem lewo
+                rotateRight(node.getRightNode());
+                rotateLeft(node);
             }
         }
 
+        // Aktualizuj wysokość dla węzła i jego rodzica po rotacjach
+        updateHeight(node);
+        if (node.getParent() != null) {
+            balanceTree(node.getParent());
+        }
     }
+
+    private void rotateRight(Node node) {
+        Node leftChild = node.getLeftNode();
+        node.setLeftNode(leftChild.getRightNode());
+        if (leftChild.getRightNode() != null) {
+            leftChild.getRightNode().setParent(node);
+        }
+        leftChild.setParent(node.getParent());
+        if (node.getParent() == null) {
+            root = leftChild;
+        } else if (node == node.getParent().getLeftNode()) {
+            node.getParent().setLeftNode(leftChild);
+        } else {
+            node.getParent().setRightNode(leftChild);
+        }
+        leftChild.setRightNode(node);
+        node.setParent(leftChild);
+
+        // Aktualizuj wagi i wysokości po rotacji
+        updateWeightAndHeight(node);
+        updateWeightAndHeight(leftChild);
+    }
+
+
+    private void rotateLeft(Node node) {
+        Node rightChild = node.getRightNode();
+        node.setRightNode(rightChild.getLeftNode());
+        if (rightChild.getLeftNode() != null) {
+            rightChild.getLeftNode().setParent(node);
+        }
+        rightChild.setParent(node.getParent());
+        if (node.getParent() == null) {
+            root = rightChild;
+        } else if (node == node.getParent().getLeftNode()) {
+            node.getParent().setLeftNode(rightChild);
+        } else {
+            node.getParent().setRightNode(rightChild);
+        }
+        rightChild.setLeftNode(node);
+        node.setParent(rightChild);
+
+
+        updateWeightAndHeight(node);
+        updateWeightAndHeight(rightChild);
+    }
+
+
+    private int getHeight(Node node) {
+        return (node == null) ? 0 : Math.max(getHeight(node.getLeftNode()), getHeight(node.getRightNode())) + 1;
+    }
+
+
+    private int getBalance(Node node) {
+        return (node == null) ? 0 : getHeight(node.getLeftNode()) - getHeight(node.getRightNode());
+    }
+
+    private void updateHeight(Node node) {
+        if (node != null) {
+            node.setWeight(Math.max(getHeight(node.getLeftNode()), getHeight(node.getRightNode())) + 1);
+        }
+    }
+
+    private void updateWeightAndHeight(Node node) {
+        if (node != null) {
+            updateHeight(node);
+        }
+    }
+
+
+
+
 
     public void deleteNood(String name) {
         Node deletedNode = getNood(name);
