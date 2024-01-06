@@ -69,6 +69,7 @@ public class Tree {
         }
     }
 
+
     private void balanceTree(Node node) {
         updateHeight(node);
 
@@ -167,9 +168,6 @@ public class Tree {
             updateHeight(node);
         }
     }
-
-
-
 
 
     public void deleteNood(String name) {
