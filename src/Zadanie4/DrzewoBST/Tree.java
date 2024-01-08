@@ -244,7 +244,7 @@ public class Tree {
     private void print(Node node) {
         if (node != null) {
             print(node.getLeftNode());
-            System.out.println(node.getValue() + " -> " + node.getAbonent().getNumber());
+            System.out.println(node.getValue() + " -> " + node.getAbonent().getNumber() + " " + node.getWeight());
             print(node.getRightNode());
         }
     }
