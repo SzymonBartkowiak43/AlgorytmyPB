@@ -179,14 +179,35 @@ public class Tree {
             return;
         }
 
+        Node parent = deletedNode.getParent();
+
         if (deletedNode.getLeftNode() == null && deletedNode.getRightNode() == null) {
-            deleteWithNoChildren(deletedNode); //0
+            deleteWithNoChildren(deletedNode); // 0
         } else if (deletedNode.getLeftNode() != null && deletedNode.getRightNode() != null) {
-            deleteNodeWithTwoChildren(deletedNode); //2
+            deleteNodeWithTwoChildren(deletedNode); // 2
         } else {
-            deleteNodeWithOneChild(deletedNode); //1
+            deleteNodeWithOneChild(deletedNode); // 1
         }
-        System.out.println("Usunieto " + name);
+
+        // Po usunięciu, równoważ drzewo AVL zaczynając od rodzica
+        if (parent != null) {
+            balanceTree(parent);
+        }
+
+        System.out.println("Usunięto " + name);
+    }
+
+    private void deleteWithNoChildren(Node deletedNode) {
+        Node parent = deletedNode.getParent();
+        if (parent == null) {
+            root = null;
+        } else {
+            if (parent.getLeftNode() == deletedNode) {
+                parent.setLeftNode(null);
+            } else {
+                parent.setRightNode(null);
+            }
+        }
     }
 
     private void deleteNodeWithOneChild(Node deletedNode) {
@@ -217,19 +238,6 @@ public class Tree {
             successor = successor.getLeftNode();
         }
         return successor;
-    }
-
-    private void deleteWithNoChildren(Node deletedNode) {
-        Node parent = deletedNode.getParent();
-        if (parent == null) {
-            root = null;
-        } else {
-            if (parent.getLeftNode() == deletedNode) {
-                parent.setLeftNode(null);
-            } else {
-                parent.setRightNode(null);
-            }
-        }
     }
 
     private int whichBigger(String pierwszy, String drugi) {
