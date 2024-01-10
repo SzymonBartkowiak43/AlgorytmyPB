@@ -65,40 +65,41 @@ public class Tree {
                 tmp.setParent(parent);
             }
 
-            balanceTree(parent);
+            balanceTree(tmp);
         }
     }
 
-
     private void balanceTree(Node node) {
-        updateHeight(node);
+        updateWeight(node);
 
         int balance = getBalance(node);
 
         if (balance > 1) {
-            if (getHeight(node.getLeftNode().getLeftNode()) >= getHeight(node.getLeftNode().getRightNode())) {
-                // Rotacja w prawo
-                rotateRight(node);
-            } else {
-                // Podwójna rotacja: najpierw lewo, potem prawo
+            if (getBalance(node.getLeftNode()) < 0) {
+                // Rotacja LR
                 rotateLeft(node.getLeftNode());
-                rotateRight(node);
             }
+            // Rotacja LL
+            rotateRight(node);
         } else if (balance < -1) {
-            if (getHeight(node.getRightNode().getRightNode()) >= getHeight(node.getRightNode().getLeftNode())) {
-                // Rotacja w lewo
-                rotateLeft(node);
-            } else {
-                // Podwójna rotacja: najpierw prawo, potem lewo
+            if (getBalance(node.getRightNode()) > 0) {
+                // Rotacja RL
                 rotateRight(node.getRightNode());
-                rotateLeft(node);
             }
+            // Rotacja RR
+            rotateLeft(node);
         }
 
-        // Aktualizuj wysokość dla węzła i jego rodzica po rotacjach
-        updateHeight(node);
+        // Aktualizuj wagę dla węzła i jego rodzica po rotacjach
+        updateWeight(node);
         if (node.getParent() != null) {
             balanceTree(node.getParent());
+        }
+    }
+
+    private void updateWeight(Node node) {
+        if (node != null) {
+            node.setWeight(getHeight(node.getLeftNode()) - getHeight(node.getRightNode()));
         }
     }
 
@@ -142,7 +143,7 @@ public class Tree {
         rightChild.setLeftNode(node);
         node.setParent(rightChild);
 
-
+        // Aktualizuj wagi i wysokości po rotacji
         updateWeightAndHeight(node);
         updateWeightAndHeight(rightChild);
     }
