@@ -22,7 +22,7 @@ public class Tree {
                 return current;
             }
         }
-        return null; //if don't find
+        return null;
     }
 
     public String getNumer(String key) {
@@ -120,7 +120,6 @@ public class Tree {
         leftChild.setRightNode(node);
         node.setParent(leftChild);
 
-        // Aktualizuj wagi i wysokości po rotacji
         updateWeightAndHeight(node);
         updateWeightAndHeight(leftChild);
     }
@@ -143,7 +142,6 @@ public class Tree {
         rightChild.setLeftNode(node);
         node.setParent(rightChild);
 
-        // Aktualizuj wagi i wysokości po rotacji
         updateWeightAndHeight(node);
         updateWeightAndHeight(rightChild);
     }
@@ -189,7 +187,6 @@ public class Tree {
             deleteNodeWithOneChild(deletedNode); // 1
         }
 
-        // Po usunięciu, równoważ drzewo AVL zaczynając od rodzica
         if (parent != null) {
             balanceTree(parent);
         }
@@ -253,7 +250,7 @@ public class Tree {
     private void print(Node node) {
         if (node != null) {
             print(node.getLeftNode());
-            System.out.println(node.getValue() + " -> " + node.getAbonent().getNumber() + " " + node.getWeight());
+            System.out.println(node.getValue() + " -> " + node.getAbonent().getNumber());
             print(node.getRightNode());
         }
     }

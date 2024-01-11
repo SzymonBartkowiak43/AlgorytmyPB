@@ -57,12 +57,4 @@ public class Node {
     public void setWeight(int weight) {
         this.weight = weight;
     }
-
-    public void incrementWeight(){
-        weight++;
-    }
-
-    public void decrementWeight(){
-        weight--;
-    }
 }
