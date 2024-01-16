@@ -9,11 +9,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Tree drzewko = new Tree(null);
-        Scanner scanner = new Scanner(System.in);
-        Path path = Paths.get("src/Zadanie4/DrzewoBST/Abonenci.csv");
 
+        Tree drzewko = new Tree(null);
         try {
+            Path path = Paths.get("src/Zadanie4/DrzewoBST/Abonenci.csv");
             List<String> lines = Files.readAllLines(path);
             String[] tym;
 
@@ -25,9 +24,9 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-
-
         while (true) {
+            Scanner scanner = new Scanner(System.in);
+
             System.out.println("1- Dodaj, 2- Znajdz, 3- Usun, 4- Wypisz, 5- Wyjdz");
             int choice = scanner.nextInt();
             scanner.nextLine();

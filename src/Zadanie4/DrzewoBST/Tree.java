@@ -14,25 +14,27 @@ public class Tree {
         Node current = root;
         while (current != null) {
             int value = whichBigger(current.getValue(), key);
-            if (value == 2) {
-                current = current.getRightNode();
-            } else if (value == 1) {
-                current = current.getLeftNode();
-            } else {
-                return current;
+            switch(value) {
+                case(2): current = current.getRightNode(); break;
+                case(1): current = current.getLeftNode(); break;
+                default: return current;
             }
         }
         return null;
     }
 
-    public String getNumer(String key) {
-        Node node = getNood(key);
-        try{
-            return node.getAbonent().getNumber();
-        } catch (NullPointerException e) {
-            return "Nie znaleziono Abonenta";
+    private int whichBigger(String pierwszy, String drugi) {
+        int result = pierwszy.compareTo(drugi);
+        if (result < 0) {
+            return 2; // w Prawo
+        } else if (result > 0) {
+            return 1; // w Lewo
         }
+        return 0;
     }
+
+
+
 
     public void addNood(Abonent abonent) {
         Node parent = null;
@@ -237,14 +239,13 @@ public class Tree {
         return successor;
     }
 
-    private int whichBigger(String pierwszy, String drugi) {
-        int result = pierwszy.compareTo(drugi);
-        if (result < 0) {
-            return 2; // w Prawo
-        } else if (result > 0) {
-            return 1; // w Lewo
+    public String getNumer(String key) {
+        Node node = getNood(key);
+        try{
+            return node.getAbonent().getNumber();
+        } catch (NullPointerException e) {
+            return "Nie znaleziono Abonenta";
         }
-        return 0;
     }
 
     private void print(Node node) {
@@ -257,20 +258,6 @@ public class Tree {
 
     public void print() {
         print(root);
-    }
-
-    private int counter(Node node) {
-        int count = 0;
-        if (node != null) {
-            count += counter(node.getLeftNode());
-            count++;
-            count += counter(node.getRightNode());
-        }
-        return count;
-    }
-
-    public int counter() {
-        return counter(root);
     }
 
     private void save(Node node, FileWriter fw) throws IOException {
@@ -286,6 +273,7 @@ public class Tree {
         try (FileWriter fw = new FileWriter("src/Zadanie4/DrzewoBST/Abonenci.csv", false)) {
             save(root, fw);
         } catch (IOException e) {
+            System.out.println("Bład zapisywania");
             e.printStackTrace();
         }
     }
