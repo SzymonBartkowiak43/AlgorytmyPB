@@ -34,8 +34,6 @@ public class Tree {
     }
 
 
-
-
     public void addNood(Abonent abonent) {
         Node parent = null;
         Node current = root;
@@ -81,14 +79,14 @@ public class Tree {
                 // Rotacja LR
                 rotateLeft(node.getLeftNode());
             }
-            // Rotacja LL
+            // Rotacja RR
             rotateRight(node);
         } else if (balance < -1) {
             if (getBalance(node.getRightNode()) > 0) {
                 // Rotacja RL
                 rotateRight(node.getRightNode());
             }
-            // Rotacja RR
+            // Rotacja LL
             rotateLeft(node);
         }
 
