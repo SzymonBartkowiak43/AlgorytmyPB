@@ -40,20 +40,21 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        for (int i = 0; i < tabSasiadow.length; i++) {
-            for (int j = 0; j < tabSasiadow[i].length; j++) {
-                System.out.print(tabSasiadow[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        System.out.println(zwrocCzyMożliwe(tabSasiadow,wejsciowaW,ksiezniczkaK,pieniadzeS -koszt.get(wejsciowaW-1)));
+//        for (int i = 0; i < tabSasiadow.length; i++) {
+//            for (int j = 0; j < tabSasiadow[i].length; j++) {
+//                System.out.print(tabSasiadow[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+        List<Integer> sciezka = new ArrayList<>();
+        System.out.println(zwrocCzyMożliwe(tabSasiadow,wejsciowaW,ksiezniczkaK,pieniadzeS -koszt.get(wejsciowaW-1),sciezka));
 
     }
 
-    static boolean zwrocCzyMożliwe(int[][] tab, int startowa, int koncowa, int pieniadze) {
+    static boolean zwrocCzyMożliwe(int[][] tab, int startowa, int koncowa, int pieniadze, List<Integer> sciezka) {
         if (pieniadze == 0 && startowa == koncowa) {
-            System.out.println("UDAŁO SIĘ!");
+            sciezka.add(koncowa);
+            System.out.println("UDAŁO SIĘ! Ścieżka: " + sciezka );
             return true;
         } else if (pieniadze <= 0) {
             return false;
@@ -61,7 +62,9 @@ public class Main {
             boolean success = false;
             for (int i = 0; i < tab.length; i++) {
                 if (tab[i][startowa - 1] != 0) {
-                    success = zwrocCzyMożliwe(tab, i + 1, koncowa, pieniadze - tab[i][startowa - 1]);
+                    sciezka.add(startowa);
+                    success = zwrocCzyMożliwe(tab, i + 1, koncowa, pieniadze - tab[i][startowa - 1], sciezka);
+                    sciezka.remove(sciezka.size() - 1);
                     if (success) {
                         break;
                     }
