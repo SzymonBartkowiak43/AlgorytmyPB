@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         int komnatyN, korytarzeM, wejsciowaW, ksiezniczkaK, pieniadzeS;
         List<Integer> koszt = new ArrayList<>();
-        int[][] tab;
+        int[][] tabSasiadow;
         try {
             Path path = Paths.get("src/Zadanie5/input.txt");
             List<String> lines = Files.readAllLines(path);
@@ -27,19 +27,43 @@ public class Main {
                 koszt.add(Integer.parseInt(wartosc));
             }
 
-            tab = new int [secondLine.length][secondLine.length];
+            tabSasiadow = new int [secondLine.length][secondLine.length];
             for (int i = 2; i < lines.size(); i++) {
                 String[] korytarzLine = lines.get(i).split(" ");
                 int x = Integer.parseInt(korytarzLine[0]) -1;
                 int y = Integer.parseInt(korytarzLine[1]) -1;
 
-                tab[x][y] = koszt.get(x);
-                tab[y][x] = koszt.get(y);
+                tabSasiadow[x][y] = koszt.get(x);
+                tabSasiadow[y][x] = koszt.get(y);
 
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        for (int i = 0; i < tabSasiadow.length; i++) {
+            for (int j = 0; j < tabSasiadow[i].length; j++) {
+                System.out.print(tabSasiadow[i][j] + " ");
+            }
+            System.out.println();
+        }
 
+        System.out.println(zwrocCzyMożliwe(tabSasiadow,wejsciowaW,ksiezniczkaK,pieniadzeS -koszt.get(wejsciowaW-1)));
+
+    }
+
+    static boolean zwrocCzyMożliwe(int [][] tab, int startowa, int koncowa, int pieniadze) {
+        if(pieniadze == 0 && startowa == koncowa) {
+            System.out.println("UDAŁO SIE!");
+            return true;
+        } else if (pieniadze <= 0){
+            return false;
+        } else {
+            for(int i = 0; i <tab.length; i++ ) {
+                if(tab[i][startowa-1] != 0) {
+                    zwrocCzyMożliwe(tab,i+1,koncowa,pieniadze-tab[i][startowa-1]);
+                }
+            }
+        }
+        return false;
     }
 }
