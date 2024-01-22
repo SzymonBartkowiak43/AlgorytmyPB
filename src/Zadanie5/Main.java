@@ -51,19 +51,23 @@ public class Main {
 
     }
 
-    static boolean zwrocCzyMożliwe(int [][] tab, int startowa, int koncowa, int pieniadze) {
-        if(pieniadze == 0 && startowa == koncowa) {
-            System.out.println("UDAŁO SIE!");
+    static boolean zwrocCzyMożliwe(int[][] tab, int startowa, int koncowa, int pieniadze) {
+        if (pieniadze == 0 && startowa == koncowa) {
+            System.out.println("UDAŁO SIĘ!");
             return true;
-        } else if (pieniadze <= 0){
+        } else if (pieniadze <= 0) {
             return false;
         } else {
-            for(int i = 0; i <tab.length; i++ ) {
-                if(tab[i][startowa-1] != 0) {
-                    zwrocCzyMożliwe(tab,i+1,koncowa,pieniadze-tab[i][startowa-1]);
+            boolean success = false;
+            for (int i = 0; i < tab.length; i++) {
+                if (tab[i][startowa - 1] != 0) {
+                    success = zwrocCzyMożliwe(tab, i + 1, koncowa, pieniadze - tab[i][startowa - 1]);
+                    if (success) {
+                        break;
+                    }
                 }
             }
+            return success;
         }
-        return false;
     }
 }
