@@ -40,17 +40,16 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-//        for (int i = 0; i < tabSasiadow.length; i++) {
-//            for (int j = 0; j < tabSasiadow[i].length; j++) {
-//                System.out.print(tabSasiadow[i][j] + " ");
-//            }
-//            System.out.println();
-//        }
+        for (int i = 0; i < tabSasiadow.length; i++) {
+            for (int j = 0; j < tabSasiadow[i].length; j++) {
+                System.out.print(tabSasiadow[i][j] + " ");
+            }
+            System.out.println();
+        }
+
         List<Integer> sciezka = new ArrayList<>();
         System.out.println(zwrocCzyMożliwe(tabSasiadow,wejsciowaW,ksiezniczkaK,pieniadzeS -koszt.get(wejsciowaW-1),sciezka));
-
     }
-
     static boolean zwrocCzyMożliwe(int[][] tab, int startowa, int koncowa, int pieniadze, List<Integer> sciezka) {
         if (pieniadze == 0 && startowa == koncowa) {
             sciezka.add(koncowa);
