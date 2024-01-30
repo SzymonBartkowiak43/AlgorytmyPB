@@ -12,6 +12,7 @@ public class Test {
                 System.out.print(tab[i][j] + " ");
             }
             System.out.println();
+            System.out.println();
         }
     }
 }
