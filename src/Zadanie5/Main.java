@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Main {
     public static void main(String[] args) {
         int komnatyN, korytarzeM, wejsciowaW, ksiezniczkaK, pieniadzeS;
