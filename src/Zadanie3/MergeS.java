@@ -56,5 +56,6 @@ private  void swap(int[][] array, int index1, int index2, int place) {
         int temp = array[index1][place];
         array[index1][place] = array[index2][place];
         array[index2][place] = temp;
+        System.out.println("Testowanie");
     }
 }
